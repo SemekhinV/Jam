@@ -1,9 +1,13 @@
-// Scripts/Door.cs
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class Door : MonoBehaviour, IInteractable
 {
+    public event Action? Opened; 
+    
     public Animator animator; // door animator (open/close)
     public bool isOpen = false;
     public AudioClip openSfx;
@@ -21,7 +25,8 @@ public class Door : MonoBehaviour, IInteractable
     {
         isOpen = !isOpen;
         animator.SetBool("isOpen", isOpen);
-        Debug.Log(isOpen ? "Дверь открыта" : "Дверь закрыта");
+        StartCoroutine(OpenDoor());
+        Debug.Log(isOpen ? "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ" : "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
         //PlaySfx(isOpen ? openSfx : closeSfx);
     }
 
@@ -38,6 +43,12 @@ public class Door : MonoBehaviour, IInteractable
 
     public string GetInteractionText()
     {
-        return isOpen ? "Закрыть дверь" : "Открыть дверь";
+        return isOpen ? "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ" : "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ";
+    }
+
+    private IEnumerator OpenDoor()
+    {
+        yield return new WaitForSeconds(0.3f);
+        Opened?.Invoke();
     }
 }
