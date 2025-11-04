@@ -50,14 +50,14 @@ public class LobbyRoom : Room
     {
         if (_lobbyTutor != null)
             _lobbyTutor.ShowRight(true);
-        if (_minigame != null)
-            _minigame.OnComplete += OnMiniGameComplete;
+        // if (_minigame != null)
+            // _minigame.OnComplete += OnMiniGameComplete;
     }
     
     private void Disable()
     {
-        if (_minigame != null)
-            _minigame.OnComplete -= OnMiniGameComplete;
+        // if (_minigame != null)
+            // _minigame.OnComplete -= OnMiniGameComplete;
     }
 
     // protected override void OnEnterRoomCompeted()
@@ -70,6 +70,6 @@ public class LobbyRoom : Room
     private void OnMiniGameComplete()
     {
         
-        _minigame.StartMinigame();
+        // _minigame.StartMinigame();
     }
 }

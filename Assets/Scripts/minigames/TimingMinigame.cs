@@ -16,7 +16,7 @@ public class TimingMinigame : MonoBehaviour, IMinigame, IInteractable
     public TextMeshProUGUI resultText;
 
     [Header("Game Settings")]
-    public float speed = 2f;
+    public float speed = 6f;
     public float targetStart = 0.3f;
     public float targetEnd = 0.7f;
 
@@ -56,8 +56,8 @@ public class TimingMinigame : MonoBehaviour, IMinigame, IInteractable
         if (!isActive || timingSlider == null) return;
 
         float delta = speed * Time.deltaTime * (movingForward ? 1 : -1);
-        timingSlider.value = Mathf.Clamp01(timingSlider.value + delta);
-        if (timingSlider.value >= 1f) movingForward = false;
+        timingSlider.value = Mathf.Clamp(timingSlider.value + delta, 0, 10);
+        if (timingSlider.value >= 10f) movingForward = false;
         else if (timingSlider.value <= 0f) movingForward = true;
     }
 
@@ -69,10 +69,12 @@ public class TimingMinigame : MonoBehaviour, IMinigame, IInteractable
 
     private void CheckResult()
     {
-        bool success = timingSlider.value >= targetStart && timingSlider.value <= targetEnd;
+        bool success = timingSlider.value > 4.6 && timingSlider.value < 5.5;
 
         resultText.text = success ? "✅ Успех!" : "❌ Промах!";
         audioSource.PlayOneShot(success ? successSound : failSound);
+
+        if (!success) return;
 
         Invoke(nameof(Close), 1.0f);
     }
@@ -90,6 +92,7 @@ public class TimingMinigame : MonoBehaviour, IMinigame, IInteractable
         timingSlider.value = 0f;
         movingForward = true;
         isActive = true;
+        Debug.Log(isActive);
     }
 
     // IInteractable реализация (если игрок может активировать вручную)
