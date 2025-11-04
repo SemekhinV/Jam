@@ -5,8 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Door : MonoBehaviour, IInteractable
 {
-    public event Action? Opened; 
-    
+    public event Action Opened;
+
+    [SerializeField] private RoomManager _roomManager;
+    [SerializeField] private bool _isCanBeOpened;
+
     public Animator animator; // door animator (open/close)
     public bool isOpen = false;
     public AudioClip openSfx;
@@ -22,10 +25,14 @@ public class Door : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        if (!_isCanBeOpened) return;
         isOpen = !isOpen;
         animator.SetBool("isOpen", isOpen);
         StartCoroutine(OpenDoor());
-        Debug.Log(isOpen ? "����� �������" : "����� �������");
+        if (_roomManager != null)
+        {
+            _roomManager.StartRoomSchedule();
+        }
         //PlaySfx(isOpen ? openSfx : closeSfx);
     }
 
