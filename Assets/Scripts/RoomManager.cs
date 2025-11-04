@@ -1,23 +1,36 @@
 // Scripts/RoomManager.cs
+
+using System;
 using UnityEngine;
 using System.Collections.Generic;
+using CutScene;
 using UI;
 
 public class RoomManager : MonoBehaviour
 {
     [SerializeField] private Hider _hider;
     [SerializeField] private List<Room> _roomSchedule;
+    [SerializeField] private CutScenes _cutScene;
     
     public int _currentRoomIndex = -1;
     
     private Room _currentRoom;
     
+    private PlayerController _playerController;
+
+    private void Awake()
+    {
+        _playerController = FindAnyObjectByType<PlayerController>();
+    }
+
     public void StartRoomSchedule()
     {
         _currentRoomIndex = 0;
         if (_roomSchedule.Count < _currentRoomIndex)
         {
             Debug.Log("Room Schedule is empty");
+            _cutScene.gameObject.SetActive(true);
+            _playerController.gameObject.SetActive(false);
             // TODO final cutscene
             return;
         }
@@ -41,7 +54,8 @@ public class RoomManager : MonoBehaviour
         if (_roomSchedule.Count < _currentRoomIndex)
         {
             Debug.Log("Room Schedule is empty");
-            // TODO final cutscene
+            _cutScene.gameObject.SetActive(true);
+            _playerController.gameObject.SetActive(false);
             return;
         }
         Room nextRoom = _roomSchedule[_currentRoomIndex];

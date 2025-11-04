@@ -11,6 +11,7 @@ namespace UI
     [SerializeField] private TextMeshProUGUI _dialogText;
     [SerializeField] private float _messageDelay = 1f;
     [SerializeField] private float _charDelay = 0.05f;
+    [SerializeField] private GameObject _dialogBackground;
     
     private PlayerInput _playerInput;
     private InputAction _clickAction;
@@ -19,9 +20,11 @@ namespace UI
     private string _currentText;
     private bool _isTyping = false;
     private bool _waitingForClick = false;
-    
+
+    private PlayerController _playerController;
     private void Awake()
     {
+        _playerController = FindAnyObjectByType<PlayerController>();
         // Получаем или создаем PlayerInput компонент
         _playerInput = GetComponent<PlayerInput>();
         if (_playerInput == null)
@@ -65,6 +68,8 @@ namespace UI
             StopCoroutine(_currentDialogCoroutine);
         }
         
+        _playerController.enabled = false;
+        _dialogBackground.SetActive(true);
         _currentDialogCoroutine = StartCoroutine(DialogCoroutine(dialog, onComplete));
     }
     
@@ -85,6 +90,8 @@ namespace UI
         _isTyping = false;
         _waitingForClick = false;
         _dialogText.text = "";
+        _dialogBackground.SetActive(false);
+        _playerController.enabled = true;
     }
     
     private IEnumerator DialogCoroutine(List<string> dialog, System.Action onComplete)
@@ -124,6 +131,8 @@ namespace UI
         _dialogText.text = "";
         onComplete?.Invoke();
         _currentDialogCoroutine = null;
+        _dialogBackground.SetActive(false);
+        _playerController.enabled = true;
     }
     
     private IEnumerator TypeText(string text)

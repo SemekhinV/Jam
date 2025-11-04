@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    
+    
     [Header("Movement")]
     public float speed = 0.5f;
     public float moveLimitLeft = -10f;
@@ -27,7 +29,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveVector;
     Rigidbody2D rb;
 
-
+    public bool IsMovingRight => rb.linearVelocityX > 0f;
+    public bool IsMovingLeft => rb.linearVelocityX < 0f;
+    
     private PlayerInputActions input;  
 
     void Awake()
@@ -63,8 +67,18 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         float move = input.Player.Move.ReadValue<float>();
-        moveVector.x = move;
 
+        if (move < 0f && transform.position.x < moveLimitLeft)
+        {
+            move = 0f;
+        }
+        
+        if (move > 0f && transform.position.x > moveLimitRight)
+        {
+            move = 0f;
+        }
+        
+        moveVector.x = move;
         rb.linearVelocity = new Vector2(moveVector.x * speed, rb.linearVelocity.y);
     }
 
