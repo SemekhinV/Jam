@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class LobbyRoom : Room
 {
-    [SerializeField] private TimingMinigame _timingMiniGame;
     [SerializeField] private LobbyTutor _lobbyTutor;
 
     private PlayerController _playerController;
@@ -11,9 +10,11 @@ public class LobbyRoom : Room
     private bool _disablingRightTutorial;
     private bool _disablingLeftTutorial;
     private bool _leftTutorStarted;
+    
     private void Awake()
     {
         _playerController = FindAnyObjectByType<PlayerController>();
+        
     }
 
     private void Update()
@@ -47,25 +48,28 @@ public class LobbyRoom : Room
 
     private void OnEnable()
     {
-        _timingMiniGame.OnComlpete += OnMiniGameComplete;
-        _lobbyTutor.ShowRight(true);
+        if (_lobbyTutor != null)
+            _lobbyTutor.ShowRight(true);
+        if (_minigame != null)
+            _minigame.OnComplete += OnMiniGameComplete;
     }
-    
     
     private void Disable()
     {
-        _timingMiniGame.OnComlpete -= OnMiniGameComplete;
+        if (_minigame != null)
+            _minigame.OnComplete -= OnMiniGameComplete;
     }
 
-    protected override void OnEnterRoomCompeted()
-    {
-        base.OnEnterRoomCompeted();
-        // Disable PlayerController
-        _timingMiniGame.gameObject.SetActive(true);
-    }
+    // protected override void OnEnterRoomCompeted()
+    // {
+    //     base.OnEnterRoomCompeted();
+    //     // Disable PlayerController
+    //     // _timingMiniGame.gameObject.SetActive(true);
+    // }
 
     private void OnMiniGameComplete()
     {
-        // Enable PlayerController
+        
+        _minigame.StartMinigame();
     }
 }

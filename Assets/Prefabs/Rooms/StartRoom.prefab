@@ -522,37 +522,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &3411678828316922772
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 892776394101540264}
-  m_Layer: 0
-  m_Name: SpawnPosition
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &892776394101540264
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3411678828316922772}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.86, y: -2.13193, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2895718847017554450}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3667434237200991633
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,7 +1140,6 @@ Transform:
   - {fileID: 8007314546090589004}
   - {fileID: 5264580341589240577}
   - {fileID: 7484712639220235859}
-  - {fileID: 892776394101540264}
   - {fileID: 215721852399237191}
   - {fileID: 9123469956898080669}
   - {fileID: 1361033404853230681}
@@ -1249,7 +1217,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LobbyRoom
   _enterRoomDialogs: []
   _exitDoor: {fileID: 1874180429137910852}
-  _playerSpawnPosition: {fileID: 892776394101540264}
+  _selfiPalka: {fileID: 0}
+  _light: {fileID: 0}
+  _minigameBehaviour: {fileID: 0}
   _timingMiniGame: {fileID: 1035026640950260630}
   _lobbyTutor: {fileID: 1342515522583372275}
 --- !u!1 &7058230294947927413
@@ -1512,7 +1482,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5264580341589240577}
-  - component: {fileID: 4910955073564607302}
   - component: {fileID: 1035026640950260630}
   m_Layer: 7
   m_Name: TimingMinigame
@@ -1536,52 +1505,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2895718847017554450}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &4910955073564607302
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8842880830306044944}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 3, y: 3}
-  m_EdgeRadius: 0
 --- !u!114 &1035026640950260630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1601,8 +1524,6 @@ MonoBehaviour:
   speed: 2
   targetStart: 0.4
   targetEnd: 0.6
-  winPosition: 5
-  _interactActionReference: {fileID: 0}
   successSound: {fileID: 0}
   failSound: {fileID: 0}
 --- !u!1 &9187817762861130134

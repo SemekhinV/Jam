@@ -11,6 +11,8 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private Hider _hider;
     [SerializeField] private List<Room> _roomSchedule;
     [SerializeField] private CutScenes _cutScene;
+    [SerializeField] private Transform _playerSpawnPosition;
+    
     
     public int _currentRoomIndex = -1;
     
@@ -62,6 +64,8 @@ public class RoomManager : MonoBehaviour
         nextRoom.gameObject.SetActive(true);
         nextRoom.Enter();
         _currentRoom = nextRoom;
+        _playerController.transform.position = _playerSpawnPosition.position;
+        
     }
     
     
